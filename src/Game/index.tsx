@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
 import SRR from './shadow_dog.png'
-import './style.css'
+import { useRef, useState, useEffect } from 'react';
 
 type AnimationFrame = {
   x: number;
@@ -98,8 +97,9 @@ const animatePlayer = (
 
 export default function Game(): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [playerState, setPlayerState] = useState('roll');
-
+  const [playerState, setPlayerState] = useState('fall');
+  const playerImage = new Image();
+  playerImage.src = SRR;
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -107,7 +107,23 @@ export default function Game(): JSX.Element {
     if (!ctx) return;
 
     animatePlayer(ctx, playerImage, spriteWidth, spriteHeight, spriteAnimation, playerState);
+    console.log(playerState);
   }, [playerState]);
 
-  return <canvas ref={canvasRef} width={600} height={600} />;
+  function handleAnimationChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    setPlayerState(event.target.value);
+  }
+
+  return (
+    <div>
+      <canvas ref={canvasRef} width={600} height={600} />
+      <select onChange={handleAnimationChange}>
+        {animationState.map((state) => (
+          <option key={state.name} value={state.name}>
+            {state.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }
