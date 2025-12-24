@@ -107,7 +107,7 @@ export default function Game(): JSX.Element {
     if (!ctx) return;
 
     animatePlayer(ctx, playerImage, spriteWidth, spriteHeight, spriteAnimation, playerState);
-    console.log(playerState);
+    // console.log(playerState);
   }, [playerState]);
 
   function handleAnimationChange(event: React.ChangeEvent<HTMLSelectElement>) {
